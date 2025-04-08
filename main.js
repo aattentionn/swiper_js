@@ -1,44 +1,76 @@
-const carouselList = document.querySelector(".carousel_list");
-const listItem = document.querySelectorAll(".list_item");
-carouselList.innerHTML = "";
-carouselList.appendChild(listItem[0]);
+class Carousel {
+    listItems = [];
+    #carouselId = null;
+    currentItemIndex = 0;
+    carоuselList = null;
+    nextBtn = null;
+    prevBtn = null;
+    opt = {};
+    intervalId = null;
 
-let currentItemIndex = 0;
 
-const nextBtn = document.createElement('button');
-nextBtn.innerHTML = "Next";
+    constructor(id, opt = {}) {
+        this.#carouselId = id;
+        this.opt = opt;
+        this.init();
+    }
 
-const prevBtn = document.createElement('button');
-prevBtn.innerHTML = "Prev";
-prevBtn.style.display = 'none';
-
-nextBtn.addEventListener('click', () => {
-    carouselList.innerHTML = "";
-    currentItemIndex += 1;
-    carouselList.appendChild(listItem[currentItemIndex]);
-
-    prevBtn.style.display = 'inline-block';
     
-    if (currentItemIndex === listItem.length - 1) {
-        nextBtn.style.display = 'none';
+    init() {
+        this.carouselList = document.querySelector(".carousel_list");
+        this.listItems = document.querySelectorAll(".list_item");
+        this.carouselList.innerHTML = this.listItems[this.currentItemIndex].innerHTML;
+        
+        this.nextBtn = document.createElement('button');
+        this.nextBtn.innerHTML = "Next";
+        this.prevBtn = document.createElement('button');
+        this.prevBtn.innerHTML = "Prev";
+        this.prevBtn.style.display = 'none';
+
+        this.prevBtn.addEventListener('click', () => this.prevSlide());
+        this.nextBtn.addEventListener('click', () => this.nextSlide());
+
+        document.body.appendChild(this.nextBtn);
+        document.body.appendChild(this.prevBtn);
+
+        if (this.opt.autoPlay){
+            this.intervalId = setInterval(() => {this.nextSlide()}, this.opt.autoPlay);
+        }
+
     }
-})
-
-document.body.appendChild(nextBtn);
 
 
-prevBtn.addEventListener('click', () => {
-
-    carouselList.innerHTML = "";
-    currentItemIndex -= 1;
-    carouselList.appendChild(listItem[currentItemIndex]);
-
-    nextBtn.style.display = 'inline-block';
-
-    if (currentItemIndex === 0) {
-        prevBtn.style.display = 'none';
+    getId() {
+        return this.#carouselId;
     }
-});
 
-document.body.insertBefore(prevBtn, document.body.firstChild);
+    nextSlide() {
+            
+            if (this.currentItemIndex < this.listItems.length - 1) {
+                this.currentItemIndex++;
+                this.updateCarousel();
+            } else if (this.opt.loop) {
+                this.currentItemIndex = 0;
+                this.updateCarousel();
+            }
+    }
 
+    prevSlide() {
+        
+            if (this.currentItemIndex > 0) {
+                this.currentItemIndex--;
+                this.updateCarousel();
+            };
+    }
+
+    updateCarousel() {
+        this.carouselList.innerHTML = this.listItems[this.currentItemIndex].innerHTML;
+
+        this.nextBtn.style.display = this.currentItemIndex === this.listItems.length - 1 && !this.opt.loop ? 'none' : 'inline-block';
+        this.prevBtn.style.display = this.currentItemIndex === 0 ? 'none' : 'inline-block';
+
+    }
+}
+
+const carousel = new Carousel('first-carousel', {autoPlay: 2000, loop: true});
+console.log(carousel.getId());
