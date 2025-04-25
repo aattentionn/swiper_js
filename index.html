@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Swiper</title>
     <link rel="stylesheet" href="style.css">
+    <script src="main.js"></script>
 </head>
 <body>
-    <div class="carousel">
+    <div class="carousel" id="first-carousel">
         <ul class="carousel_list">
             <li class="list_item">
                 <img src="https://img51994.kanal-o.ru/img/2024-09-09/fmt_81_24_shutterstock_2141488197.jpg" alt="nature_1">
@@ -20,6 +21,27 @@
             </li>
         </ul>
     </div>
-    <script src="main.js"></script>
+    <div class="carousel" id="second-carousel">
+        <ul class="carousel_list">
+            <li class="list_item">
+                <img src="https://img51994.kanal-o.ru/img/2024-09-09/fmt_81_24_shutterstock_2141488197.jpg" alt="nature_1">
+            </li>
+            <li class="list_item">
+                <img src="https://oboitd.ru/images/goods/big/20200125110231_Priroda_10-344.jpg" alt="nature_2">
+            </li>
+            <li class="list_item">
+                <img src="https://azbyka.ru/wp-content/uploads/2016/07/priroda.jpg" alt="nature_3">
+            </li>
+        </ul>
+    </div>
+    <script>
+        const carousel = new Carousel('first-carousel', {autoPlay: 5000, loop: true});
+        console.log(carousel.getId());
+
+        const carousel2 = new Carousel('second-carousel', { 
+            loop: true
+        });
+        console.log(carousel2.getId());
+    </script>
 </body>
 </html>

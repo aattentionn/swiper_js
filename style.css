@@ -12,6 +12,8 @@ body {
     display: flex;
     align-items: center;
     height: 100vh;
+    flex-direction: column;
+    gap: 16px;
 }
 
 .list_item {
@@ -22,6 +24,7 @@ body {
 .carousel_list {
     display: flex;
     overflow: hidden;
+    grid-area: slides;
 }
 
 img {
@@ -34,6 +37,9 @@ img {
 .carousel {
     overflow: hidden;
     padding: 15px;
+    display: grid;
+    grid-template-areas: "prev slides next";
+    grid-template-columns: auto 1fr auto;
 }
 
 button {
@@ -43,4 +49,12 @@ button {
     padding: 10px;
     font-size: 14px;
     font-weight: 600;
+}
+
+.prev {
+    grid-area: prev;
+}
+
+.next {
+    grid-area: next;
 }
