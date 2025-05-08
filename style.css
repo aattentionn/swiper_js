@@ -24,7 +24,8 @@ body {
 .carousel_list {
     display: flex;
     overflow: hidden;
-    grid-area: slides;
+    margin-bottom: 15px;
+    /* grid-area: slides; */
 }
 
 img {
@@ -37,9 +38,10 @@ img {
 .carousel {
     overflow: hidden;
     padding: 15px;
-    display: grid;
+    text-align: center;
+    /* display: grid;
     grid-template-areas: "prev slides next";
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: auto 1fr auto; */
 }
 
 button {
@@ -49,12 +51,25 @@ button {
     padding: 10px;
     font-size: 14px;
     font-weight: 600;
+    cursor: pointer;
 }
 
-.prev {
+.fade_slide {
+    opacity: 0;
+    transform: translateX(30px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.fade_slide.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+
+/* .prev {
     grid-area: prev;
 }
 
 .next {
     grid-area: next;
-}
+} */
