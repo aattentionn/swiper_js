@@ -55,14 +55,18 @@ button {
 }
 
 .fade_slide {
-    opacity: 0;
-    transform: translateX(30px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
 }
 
 .fade_slide.show {
-    opacity: 1;
-    transform: translateX(0);
+    animation-name: animationIn;
+    animation-timing-function: ease-in;
+}
+
+.fade_slide.off {
+    animation-name: animationOut;
+    animation-timing-function: ease-out;
 }
 
 
@@ -73,3 +77,23 @@ button {
 .next {
     grid-area: next;
 } */
+
+@keyframes animationIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes animationOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}

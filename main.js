@@ -8,6 +8,7 @@ class Carousel {
     opt = {};
     intervalId = null;
     carouselContainer = null;
+    currentElement = null;
 
 
     constructor(id, opt = {}) {
@@ -50,6 +51,8 @@ class Carousel {
         if (this.opt.autoPlay){
             this.intervalId = setInterval(() => {this.changeSlide('next')}, this.opt.autoPlay);
         }
+
+        this.carouselList.innerHTML = '';
 
         this.updateCarousel();
 
@@ -115,14 +118,21 @@ class Carousel {
     }
 
     updateCarousel() {
-        this.carouselList.innerHTML = '';
         const newItem = this.listItems[this.currentItemIndex].cloneNode(true);
         newItem.classList.add('fade_slide');
-        this.carouselList.appendChild(newItem);
+        
+        if (this.currentElement) {
+            this.currentElement.classList.toggle('off');
+        }
 
-        requestAnimationFrame(() => {
-            newItem.classList.add('show');
-        });
+        setTimeout(() => {
+            this.carouselList.innerHTML = '';
+            this.carouselList.appendChild(newItem);
+            requestAnimationFrame(() => {
+                newItem.classList.add('show');
+                this.currentElement = newItem;
+            });
+        }, 1900); 
 
         this.nextBtn.style.display = this.currentItemIndex === this.listItems.length - 1 && !this.opt.loop ? 'none' : 'inline-block';
         this.prevBtn.style.display = this.currentItemIndex === 0 && !this.opt.loop ? 'none' : 'inline-block';
